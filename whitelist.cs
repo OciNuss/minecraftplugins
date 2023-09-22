@@ -31,7 +31,7 @@ namespace Oxide.Plugins
             {
                 foreach (var onlinePlayer in BasePlayer.activePlayerList)
                 {
-                   player.ChatMessage(player.displayName + "connected");
+                   player.ChatMessage(player.displayName + " connected");
                 }
             }
             else
@@ -39,7 +39,7 @@ namespace Oxide.Plugins
                 player.Kick("You are not whitelisted");
                 foreach (var onlinePlayer in BasePlayer.activePlayerList)
                 {
-                    player.ChatMessage(player.displayName + "disconnected (not whitelisted)");
+                    player.ChatMessage(player.displayName + " disconnected (not whitelisted)");
                 }
             }
         }
@@ -48,7 +48,7 @@ namespace Oxide.Plugins
         {
             foreach (var onlinePlayer in BasePlayer.activePlayerList)
             {
-                player.ChatMessage(player.displayName + "disconnected");
+                player.ChatMessage(player.displayName + " disconnected");
             }
         }
     }
