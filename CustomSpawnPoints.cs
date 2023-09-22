@@ -28,15 +28,15 @@ namespace Oxide.Plugins
         }
         void OnPluginLoaded(Plugin plugin)
         {
-            if (!initialized && plugin?.Title == "Spawns")            
-                LoadSpawnpoints();            
+            if (!initialized && plugin?.Title == "Spawns")
+                LoadSpawnpoints();
         }
         object OnPlayerRespawn(BasePlayer player)
         {
             if (!initialized) return null;
 
             object position = GetSpawnPoint();
-            if (position is Vector3)            
+            if (position is Vector3)
                 return new BasePlayer.SpawnPoint() { pos = (Vector3)position, rot = new Quaternion(0, 0, 0, 1) };
             return null;
         }
@@ -46,6 +46,9 @@ namespace Oxide.Plugins
         private void LoadSpawnpoints()
         {
             initialized = false;
+            spawnPoints = new List<Vector3>() { new Vector3(87,2, -520)};
+            initialized = true;
+            return;
             if (string.IsNullOrEmpty(configData.Spawnfile))
             {
                 PrintError("No spawnfile set in the config. Unable to continue");
@@ -84,10 +87,10 @@ namespace Oxide.Plugins
             Facepunch.Pool.FreeList(ref entities);
 
             remainingPoints.Remove(position);
-            if (remainingPoints.Count == 0)            
-                remainingPoints = new List<Vector3>(spawnPoints);            
+            if (remainingPoints.Count == 0)
+                remainingPoints = new List<Vector3>(spawnPoints);
 
-            if (count > 0) 
+            if (count > 0)
                 return GetSpawnPoint(++attempt);
 
             return position;
@@ -100,7 +103,7 @@ namespace Oxide.Plugins
         {
             if (arg == null)
                 return;
-          
+
             if (arg.Connection == null || (arg.Connection != null && arg.Connection.authLevel == 2))
             {
                 if (arg.Args == null || arg.Args.Length == 0)
@@ -132,9 +135,9 @@ namespace Oxide.Plugins
                     configData.Spawnfile = arg.Args[0];
                     SaveConfig(configData);
                     LoadSpawnpoints();
-                }                
+                }
             }
-            else SendReply(arg, "You do not have permission to use this command");           
+            else SendReply(arg, "You do not have permission to use this command");
         }
         #endregion
 
@@ -145,7 +148,7 @@ namespace Oxide.Plugins
             [JsonProperty(PropertyName = "Spawnfile name")]
             public string Spawnfile { get; set; }
             [JsonProperty(PropertyName = "Entity detection radius")]
-            public float Detect { get; set; }            
+            public float Detect { get; set; }
         }
         private void LoadVariables()
         {
