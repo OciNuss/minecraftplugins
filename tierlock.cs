@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Oxide.Core.Plugins;
 using System;
 using System.Collections.Generic;
@@ -16,6 +16,7 @@ namespace Oxide.Plugins
 
         //Save wipe time
         public float wipeTime = UnityEngine.Time.time;
+        public float lastUIUpdate = UnityEngine.Time.time;
 
         //Time each tier is the max for in hours
         //once tier2Time has elapsed, all tiers are unlocked
@@ -89,7 +90,11 @@ namespace Oxide.Plugins
 
         void OnTick()
         {
-            ReloadGlobalUI();
+            if (UnityEngine.Time.time - lastUIUpdate > 1)
+            {
+                lastUIUpdate = UnityEngine.Time.time;
+                ReloadGlobalUI();
+            }
         }
 
         void OnPlayerConnected(BasePlayer player)
